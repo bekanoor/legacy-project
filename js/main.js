@@ -58,7 +58,7 @@ function hasEmptyRequiredInput(){
 
 function Get_scores() {
 
-    var value = fullInTopics() + choiceTopics() + multipleChoiceTopics() + trueOrFalseTopics() + shortAnswerTopics();
+    var value = fullInTopics() + choiceTopics() + multipleChoiceTopics() + trueOrFalseTopics() + shortAnswerTopics() + seriousQuestionsTopics();
     $("#scores").text(value);
     $('#divScores').addClass('text-danger');
 
@@ -162,4 +162,33 @@ function shortAnswerTopics() {
         shortAnswerSubject.scores = shortAnswerSubject.scorePerSubject;
     }
     return shortAnswerSubject.scores;
+}
+
+function seriousQuestionsTopics() {
+    var seriousQuestionsSubject = new Subject('seriousQuestionsSubject',
+        [
+            ['A', 'B', 'C'],
+            ['A', 'B']
+        ], 2, 10);
+    
+    var seriousQuestionsSubject1 = new MultipleChoiceSubject('check_ans_3');
+    var value1 = seriousQuestionsSubject1.calculation();
+    var answer1 = seriousQuestionsSubject.answer[0];
+    if (answer1.length == value1.length) {
+        var diffA = _.difference(value1, answer1);
+        if (_.isEmpty(diffA)) {
+            seriousQuestionsSubject.scores += seriousQuestionsSubject.scorePerSubject;
+        }
+    }
+
+    var seriousQuestionsSubject2 = new MultipleChoiceSubject('check_ans_4');
+    var value2 = seriousQuestionsSubject2.calculation();
+    var answer2 = seriousQuestionsSubject.answer[1];
+    if (answer2.length == value2.length) {
+        var diffB = _.difference(value2, answer2);
+        if (_.isEmpty(diffB)) {
+            seriousQuestionsSubject.scores += seriousQuestionsSubject.scorePerSubject;
+        }
+    }
+    return seriousQuestionsSubject.scores;
 }
