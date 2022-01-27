@@ -7,6 +7,7 @@ $(document).ready(function(){
             return false;
         }
         Get_scores();
+        Get_bottomScores();
         return false;
     });
 });
@@ -75,6 +76,19 @@ function Get_scores() {
     $("#scores").text(value);
     $('#divScores').addClass('text-danger');
 
+}
+
+function Get_bottomScores() {
+    var value = fullInTopics() + choiceTopics() + multipleChoiceTopics() + trueOrFalseTopics() + shortAnswerTopics() + seriousQuestionsTopics();
+    $("#scoresBottom").text(value);
+
+    if (value < 60) {
+        $("#grade").text(' 3');
+    } else if (value > 60 && value <= 80) {
+        $("#grade").text(' 4');
+    } else if (value > 80){
+        $("#grade").text(' 5');
+    }
 }
 
 function fullInTopics() {
