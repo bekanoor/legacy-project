@@ -11,14 +11,15 @@ $(document).ready(function(){
     });
 });
 
-
 function inputsInformation(inputs) {
     var text = '';
     for (var i = 0; i < inputs.length; i++) {
         var input = inputs[i];
         var element = $('#' + input.id);
+        var option = $('#studentName option:selected');
+        var value = option.text();
 
-        if (element && _.isEmpty(element.val())) {
+        if (element && _.isEmpty(element.val()) || value === 'Select student') {
             $('#'+input.divId).addClass('has-error');
             text += input.text + '';
         }
@@ -26,6 +27,7 @@ function inputsInformation(inputs) {
             $('#' + input.divId).removeClass('has-error');
         }
     }
+
     return text;
 }
 
@@ -44,11 +46,22 @@ function hasEmptyRequiredInput(){
         {
             id: 'studentName',
             text: 'name',
-            divId: 'name'
+            divId: 'name',
+            options: [
+                'Select student',
+                'Eugene',
+                'Ivan',
+                'Roman',
+                'Oleg'
+            ]
         }
     ];
-
     var text = inputsInformation(requiredInputs);
+    var option = $('#studentName option:selected');
+    var value = option.text();
+
+    if(value === 'Select student') return true
+
     if(text !== ''){
 
         return true;
